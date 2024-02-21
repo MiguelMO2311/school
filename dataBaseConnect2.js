@@ -29,12 +29,14 @@ const query_count = 'SELECT COUNT(*) FROM school.students'
 // • Listar todos los campos de la tabla “groups”.
 const query_all = 'SELECT * FROM school.groups'
 // • Elimina todas las notas de la base de datos que estén por encima de 5 y que sean del año pasado (no utilices BETWEEN).
-const query_deleteAnd = 'DELETE mark FROM marks WHERE mark > 5 AND date LIKE "2023%";'
+const query_deleteMarksMore5AndYear2023 = 'DELETE FROM marks WHERE mark > 5 AND date LIKE "2023%";'
 // • Elimina todas las notas de la base de datos que estén por encima de 5 y que sean del año pasado (utiliza  BETWEEN).
-const query_deleteAndBetween= 'SELECT mark FROM marks WHERE mark > 5 AND date BETWEEN “2023-01-01” AND “2023-12-31”;'
+const query_deleteMarksMore5AndYear2023Between= 'DELETE FROM marks WHERE mark > 5 AND date BETWEEN "2023-01-01" AND "2023-12-31";'
+
+
 // • Obtén los datos de todos los estudiantes que estén en el bootcamp este año. 
 // Para ello la tabla de estudiantes debe tener un campo que sea el año de ingreso.
-const query_modifyStudents = 'ALTER TABLE school.students ADD registration_date1 DATE;'
+const query_modifyStudents = 'ALTER TABLE school.students ADD registration_date DATE;'
 
 const updateRegist_date  ="UPDATE students SET registration_date = '2021-05-15' WHERE student_id = 1;"
 const updateRegist_date1 ="UPDATE students SET registration_date = '2021-08-20' WHERE student_id = 2;"
@@ -50,7 +52,7 @@ const updateRegist_date9 ="UPDATE students SET registration_date = '2023-11-08' 
 const query_YearCurdate = 'SELECT * FROM students WHERE YEAR(registration_date) = "2024%";'
 
 // Calcular el numero de profesores que hay por cada asignatura.
-const_numberTeachersForSubjects = 'SELECT subjects.title, COUNT(teachers.teacher_id) AS num_teachers FROM subjects JOIN subject_teacher ON subjects.subject_id = subject_teacher.subject_id JOIN teachers ON subject_teacher.teacher_id = teachers.teacher_id GROUP BY subjects.title;'
+const query_numberTeachersForSubjects = 'SELECT subjects.title, COUNT(teachers.teacher_id) AS num_teachers FROM subjects JOIN subject_teacher ON subjects.subject_id = subject_teacher.subject_id JOIN teachers ON subject_teacher.teacher_id = teachers.teacher_id GROUP BY subjects.title;'
 
 // ------------------------------------------------------> RETO 2 <------------------------------------------------------
 
@@ -69,6 +71,14 @@ const query_AvgStudents ='SELECT students.first_name, AVG(marks.mark) AS average
 // ------------------------------------------------------> RETO OPCIONAL 1 <------------------------------------------------------
 const query_insertRelac = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "HTML"),(SELECT group_id FROM `groups` WHERE name = "1ºA"), (SELECT teacher_id FROM teachers WHERE first_name = "Jose"));'
 const query_insertRelac1 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "TypeScript"),(SELECT group_id FROM `groups` WHERE name = "2ºB"), (SELECT teacher_id FROM teachers WHERE first_name = "Ruben"));'
+const query_insertRelac2 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "Lenguaje"),(SELECT group_id FROM `groups` WHERE name = "3ºC"), (SELECT teacher_id FROM teachers WHERE first_name = "Leonardo"));'
+const query_insertRelac3 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "Matematicas"),(SELECT group_id FROM `groups` WHERE name = "4ºA"), (SELECT teacher_id FROM teachers WHERE first_name = "Galileo"));'
+const query_insertRelac4 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "Historia"),(SELECT group_id FROM `groups` WHERE name = "1ºB"), (SELECT teacher_id FROM teachers WHERE first_name = "Marie"));'
+const query_insertRelac5 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "Educacion Física"),(SELECT group_id FROM `groups` WHERE name = "1ºC"), (SELECT teacher_id FROM teachers WHERE first_name = "Remus"));'
+const query_insertRelac6 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "Historia),(SELECT group_id FROM `groups` WHERE name = "2ºA"), (SELECT teacher_id FROM teachers WHERE first_name = "Minerva"));'
+const query_insertRelac7 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "TypeScript"),(SELECT group_id FROM `groups` WHERE name = "3ºB"), (SELECT teacher_id FROM teachers WHERE first_name = "Ruben"));'
+const query_insertRelac8 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "HTML"),(SELECT group_id FROM `groups` WHERE name = "3ºA"), (SELECT teacher_id FROM teachers WHERE first_name = "Jose"));'
+const query_insertRelac9 = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "Derecho Mercantil"),(SELECT group_id FROM `groups` WHERE name = "2ºC"), (SELECT teacher_id FROM teachers WHERE first_name = "Peter"));'
 
 // Obtén los nombres de los alumnos y la cantidad total de asignaturas por alumno que sean HTML o TypeScript y cuyo profesor sea Jose.
 // • ACLARACIÓN: El acceso a las asignaturas y a los profesores será a través de su id.

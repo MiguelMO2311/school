@@ -23,7 +23,7 @@ async function main(query) {
 // ------------------------------------------------------> RETO 1<------------------------------------------------------
 
 // . calcular la nota media de los alumnos de la asignatura 1.
-const query_avg = 'SELECT AVG(subject_id) AS mark_Avg FROM subjects where subject_id=1;'
+const query_avg = 'SELECT AVG(marks.mark) AS average_mark FROM marks WHERE marks.subject_id = 1'
 // • Calcular el número total de alumnos que hay en el bootcamp.
 const query_count = 'SELECT COUNT(*) FROM school.students'
 // • Listar todos los campos de la tabla “groups”.
@@ -52,21 +52,21 @@ const updateRegist_date9 ="UPDATE students SET registration_date = '2023-11-08' 
 const query_YearCurdate = 'SELECT * FROM students WHERE YEAR(registration_date) = "2024%";'
 
 // Calcular el numero de profesores que hay por cada asignatura.
-const query_numberTeachersForSubjects = 'SELECT subjects.title, COUNT(teachers.teacher_id) AS num_teachers FROM subjects JOIN subject_teacher ON subjects.subject_id = subject_teacher.subject_id JOIN teachers ON subject_teacher.teacher_id = teachers.teacher_id GROUP BY subjects.title;'
+const query_numberTeachersForSubjects = 'SELECT subject_id, COUNT(teacher_id) AS num_teachers FROM subject_teacher GROUP BY subject_id'
 
 // ------------------------------------------------------> RETO 2 <------------------------------------------------------
 
 // • Obtén el id y la nota de los alumnos que tengan un id entre 1 y 20, o que tenga una nota mayor de 8 y la nota tenga fecha del año pasado.
 
-const query_IdOrMark = 'SELECT students.student_id, marks.mark FROM students JOIN marks ON students.student_id = marks.student_id WHERE (students.student_id BETWEEN 1 AND 20) OR (marks.mark > 8 AND YEAR(marks.date) = 2023);'
+const query_IdOrMark = 'SELECT student_id, mark FROM marks WHERE (student_id BETWEEN 1 AND 20) OR (mark > 8 AND YEAR(date) = 2023)'
 
 // • Obtén la media de las notas que se han dado en el último año por asignatura.
 
-const query_AvgSubjects = 'SELECT subjects.title, AVG(marks.mark) AS average_mark FROM marks JOIN subjects ON marks.subject_id = subjects.subject_id WHERE YEAR(marks.date) = "2023%" GROUP BY subjects.title;'
+const query_AvgSubjects = 'SELECT subject_id, AVG(mark) AS average_mark FROM marks WHERE YEAR(date) = 2023 GROUP BY subject_id'
 
 // • Obtén la media aritmética de las notas que se han dado en el último año por alumno.
 
-const query_AvgStudents ='SELECT students.first_name, AVG(marks.mark) AS average_mark FROM marks JOIN students ON marks.student_id = students.student_id WHERE YEAR(marks.date) = "2023%" GROUP BY students.first_name;'
+const query_AvgStudents ='SELECT student_id, AVG(mark) AS average_mark FROM marks WHERE YEAR(date) = 2023 GROUP BY student_id'
 
 // ------------------------------------------------------> RETO OPCIONAL 1 <------------------------------------------------------
 const query_insertRelac = 'INSERT INTO subject_teacher (subject_id, group_id, teacher_id) VALUES ((SELECT subject_id FROM subjects WHERE title = "HTML"),(SELECT group_id FROM `groups` WHERE name = "1ºA"), (SELECT teacher_id FROM teachers WHERE first_name = "Jose"));'
@@ -83,16 +83,13 @@ const query_insertRelac9 = 'INSERT INTO subject_teacher (subject_id, group_id, t
 // Obtén los nombres de los alumnos y la cantidad total de asignaturas por alumno que sean HTML o TypeScript y cuyo profesor sea Jose.
 // • ACLARACIÓN: El acceso a las asignaturas y a los profesores será a través de su id.
 
-const query_HtmlTypesJose = 'SELECT students.first_name, COUNT(subjects.subject_id) AS total_subjects FROM students JOIN marks ON students.student_id = marks.student_id JOIN subjects ON marks.subject_id = subjects.subject_id JOIN subject_teacher ON subjects.subject_id = subject_teacher.subject_id JOIN teachers ON subject_teacher.teacher_id = teachers.teacher_id WHERE (subjects.title = "HTML" OR subjects.title = "TypeScript") AND teachers.first_name = "Jose"GROUP BY students.first_name;'
-// *selecciona el nombre del estudiante y cuenta el número total de asignaturas para cada estudiante que cumpla con las condiciones que se piden.
+const query_HtmlTypesJose = 'SELECT students.first_name, COUNT(marks.subject_id) AS total_subjects FROM students, marks WHERE students.student_id = marks.student_id AND marks.subject_id IN (SELECT subject_id FROM subjects WHERE title IN ("HTML", "TypeScript") AND subject_id IN ( SELECT subject_id FROM subject_teacher WHERE teacher_id IN ( SELECT teacher_id FROM teachers WHERE first_name = "Jose"))) GROUP BY students.first_name;'
 
 // ------------------------------------------------------> RETO OPCIONAL 2 <------------------------------------------------------
 // • Obtén los nombres de los alumnos y la cantidad total de asignaturas por alumno que sean HTML o TypeScript y cuyo profesor sea Jose 
 // o algún compañero que elijáis.  ACLARACIÓN: El acceso a las asignaturas y a los profesores será a través de su nombre.
 
-const query_HtmlTypesJoseOrRuben = 'SELECT students.first_name, COUNT(subjects.subject_id) AS total_subjects FROM students JOIN marks ON students.student_id = marks.student_id JOIN subjects ON marks.subject_id = subjects.subject_id JOIN subject_teacher ON subjects.subject_id = subject_teacher.subject_id JOIN teachers ON subject_teacher.teacher_id = teachers.teacher_id WHERE (subjects.title = "HTML" OR subjects.title = "TypeScript") AND (teachers.first_name = "Jose" OR teachers.first_name = "Ruben") GROUP BY students.first_name;'
-// *devuelve los nombres de los alumnos y la cantidad total de asignaturas por alumno que sean HTML o TypeScript y cuyo profesor sea Jose o Ruben.
-
+const query_HtmlTypesJoseOrRuben = 'SELECT students.first_name, COUNT(marks.subject_id) AS total_subjects FROM students, marks WHERE students.student_id = marks.student_id AND marks.subject_id IN ( SELECT subject_id FROM subjects WHERE title IN ("HTML", "TypeScript") AND subject_id IN ( SELECT subject_id FROM subject_teacher WHERE teacher_id IN ( SELECT teacher_id FROM teachers WHERE first_name IN ("Jose", "Ruben")))) GROUP BY students.first_name;'
 
 const query = query_HtmlTypesJoseOrRuben;
 main(query);

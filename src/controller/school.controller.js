@@ -4,15 +4,6 @@ const { connectionPromise } = require('../database.js');
 let school = null;
 
 
-function getSchool(request, response) {
-  let res;
-  if (school != null)
-    res = school;
-  else
-    res = { error: true, codigo: 200, message: 'Doesn´t Exist' }
-  response.send(res);
-}
-
 // Conseguir todos los estudiantes
 
 async function getStudents(req, res) {

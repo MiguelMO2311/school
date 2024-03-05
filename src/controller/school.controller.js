@@ -3,6 +3,16 @@ const { connectionPromise } = require('../database.js');
 
 let school = null;
 
+// hace una solicitud HTTP GET para obtener información de school.
+//  verifica si es nula y sino lo es prepara una respuesta, y sino existe responde con un error.
+function getSchool(request, response) {
+  let res;
+  if (school != null)
+    res = school;
+  else
+    res = { error: true, codigo: 200, message: 'Doesn´t Exist' }
+  response.send(res);
+}
 
 // Conseguir todos los estudiantes
 

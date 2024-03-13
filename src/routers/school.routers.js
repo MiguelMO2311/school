@@ -5,11 +5,11 @@ const schoolCtrl = require ('../controller/school.controller');
 
 
 // reto 1. endPoints Students //
-router.get('/students/:id', schoolCtrl.getStudentById);
-router.get('/students', schoolCtrl.getStudents);
-router.post('/students', schoolCtrl.addStudent);
-router.put('/students/:id', schoolCtrl.updateStudent);
-router.delete('/students/:id', schoolCtrl.deleteStudent);
+router.get('/students/:id', schoolCtrl.getStudentByIdApi);
+router.get('/students', schoolCtrl.getStudentsApi);
+router.post('/students', schoolCtrl.addStudentApi);
+router.put('/students/:id', schoolCtrl.updateStudentApi);
+router.delete('/students/:id', schoolCtrl.deleteStudentApi);
 
 
 // reto 2. endPoints Subjects and Marks//

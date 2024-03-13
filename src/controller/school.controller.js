@@ -1,81 +1,106 @@
 const { connectionPromise } = require('../database.js');
 
+// Inicializa la variable school como un objeto vacío
+let school = {};
 
-let school = null;
-
-// hace una solicitud HTTP GET para obtener información de school.
-//  verifica si es nula y sino lo es prepara una respuesta, y sino existe responde con un error.
+// Obtiene información de school
 function getSchool(request, response) {
-  let res;
-  if (school != null)
-    res = school;
-  else
-    res = { error: true, codigo: 200, message: 'Doesn´t Exist' }
-  response.send(res);
+  if (school) {
+    response.send(school);
+  } else {
+    response.status(404).send({ error: true, codigo: 404, message: 'No existe información de la escuela' });
+  }
 }
 
-// Conseguir todos los estudiantes
-
-async function getStudents(req, res) {
+// Obtiene todos los estudiantes
+async function getStudentsApi(req, res) {
   const connection = await connectionPromise;
   try {
     const [results] = await connection.query('SELECT * FROM students');
     res.send(results);
   } catch (error) {
     console.error(error);
+    res.status(500).send({ error: true, codigo: 500, message: 'Error al obtener los estudiantes' });
   }
 }
 
-// Conseguir estudiante por su Id
-async function getStudentById(req, res) {
+// Obtiene un estudiante por su Id
+async function getStudentByIdApi(req, res) {
   const connection = await connectionPromise;
   try {
     const [results] = await connection.query('SELECT * FROM students WHERE student_id = ?', [req.params.id]);
-    res.send(results[0]);
+    if (results.length > 0) {
+      res.send(results[0]);
+    } else {
+      res.status(404).send({ error: true, codigo: 404, message: 'Estudiante no encontrado' });
+    }
   } catch (error) {
     console.error(error);
+    res.status(500).send({ error: true, codigo: 500, message: 'Error al obtener el estudiante' });
   }
 }
 
-// Añadir estudiante
-async function addStudent(req, res) {
-  let connection;
+// // Añade un estudiante
+// async function addStudentApi(req, res) {
+//   const connection = await connectionPromise;
+//   try {
+//     const sql = 'INSERT INTO students SET ?';
+//     const studentObj = req.body;
+//     await connection.query(sql, studentObj);
+//     res.send('Estudiante agregado correctamente.');
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: true, codigo: 500, message: 'Error al agregar el estudiante' });
+//   }
+// }
+// Añade un estudiante
+// Añade un estudiante
+async function addStudentApi(req, res) {
+  const connection = await connectionPromise;
   try {
-    connection = await connectionPromise;
     const sql = 'INSERT INTO students SET ?';
     const studentObj = req.body;
+
+    // Formatea la fecha al formato de MySQL (YYYY-MM-DD)
+    const formattedDate = new Date(studentObj.registration_date).toISOString().slice(0, 10);
+
+    // Asigna la fecha formateada al objeto del estudiante
+    studentObj.registration_date = formattedDate;
+
     await connection.query(sql, studentObj);
-    res.send('Student Add.');
+    res.send('Estudiante agregado correctamente.');
   } catch (error) {
     console.error(error);
-  } finally {
-    if (connection) {
-      connection.end();
-    }
+    res.status(500).send({ error: true, codigo: 500, message: 'Error al agregar el estudiante' });
   }
 }
 
-// Actualizar estudiante
-async function updateStudent(req, res) {
+
+
+// Actualiza un estudiante
+async function updateStudentApi(req, res) {
   const connection = await connectionPromise;
   const sql = 'UPDATE students SET ? WHERE student_id = ?';
   const studentObj = req.body;
   try {
     await connection.query(sql, [studentObj, req.params.id]);
-    res.send('Student Update.');
+    res.send('Estudiante actualizado correctamente.');
   } catch (error) {
     console.error(error);
+    res.status(500).send({ error: true, codigo: 500, message: 'Error al actualizar el estudiante' });
   }
 }
 
 // Eliminar estudiante
-async function deleteStudent(req, res) {
+async function deleteStudentApi(req, res) {
   const connection = await connectionPromise;
   try {
-    await connection.query('DELETE FROM students WHERE student_id = ?', [req.params.id]);
-    res.send('Student Delete.');
+    const studentId = req.params.id;
+    await connection.query('DELETE FROM students WHERE student_id = ?', [studentId]);
+    res.send('Estudiante eliminado exitosamente.');
   } catch (error) {
-    console.error(error);
+    console.error('Error al eliminar el estudiante:', error);
+    res.status(500).send('Error al eliminar el estudiante.');
   }
 }
 
@@ -87,6 +112,7 @@ async function getAverageMark(req, res) {
     res.send(results[0]);
   } catch (error) {
     console.error(error);
+    res.status(500).send('Error al obtener la nota media.');
   }
 }
 
@@ -98,6 +124,7 @@ async function getEnrolledSubjects(req, res) {
     res.send(results);
   } catch (error) {
     console.error(error);
+    res.status(500).send('Error al obtener las asignaturas matriculadas.');
   }
 }
 
@@ -109,6 +136,7 @@ async function getAllStudentsAndSubjects(req, res) {
     res.send(results);
   } catch (error) {
     console.error(error);
+    res.status(500).send('Error al obtener todos los estudiantes y sus asignaturas.');
   }
 }
 
@@ -116,25 +144,32 @@ async function getAllStudentsAndSubjects(req, res) {
 async function getTaughtSubjects(req, res) {
   const connection = await connectionPromise;
   try {
-    const [results] = await connection.query('SELECT subjects.title FROM subjects INNER JOIN subject_teacher ON subjects.subject_id = subject_teacher.subject_id WHERE subject_teacher.teacher_id = ?', [req.params.id]);
+    const [results] = await connection.query('SELECT subjects.title FROM subjects WHERE teacher_id = ?', [req.params.id]);
     res.send(results);
   } catch (error) {
     console.error(error);
+    res.status(500).send('Error al obtener las asignaturas impartidas.');
   }
 }
+
 
 // Obtener todos los profesores y sus asignaturas
 async function getAllTeachersAndSubjects(req, res) {
   const connection = await connectionPromise;
   try {
-    const [results] = await connection.query('SELECT teachers.first_name, teachers.last_name, subjects.title FROM teachers INNER JOIN subject_teacher ON teachers.teacher_id = subject_teacher.teacher_id INNER JOIN subjects ON subjects.subject_id = subject_teacher.subject_id');
+    const query = `
+      SELECT teachers.first_name, teachers.last_name, subjects.title
+      FROM teachers
+      INNER JOIN subject_teacher ON teachers.teacher_id = subject_teacher.teacher_id
+      INNER JOIN subjects ON subjects.subject_id = subject_teacher.subject_id
+    `;
+    const [results] = await connection.query(query);
     res.send(results);
   } catch (error) {
     console.error(error);
+    res.status(500).send('Error al obtener todos los profesores y sus asignaturas.');
   }
-}
+};
 
 
-
-
-module.exports = { getSchool, getStudentById, getStudents, addStudent, updateStudent, deleteStudent, getAverageMark, getEnrolledSubjects, getAllStudentsAndSubjects, getTaughtSubjects, getAllTeachersAndSubjects }
+module.exports = { getSchool, getStudentByIdApi, getStudentsApi, addStudentApi, updateStudentApi, deleteStudentApi, getAverageMark, getEnrolledSubjects, getAllStudentsAndSubjects, getTaughtSubjects, getAllTeachersAndSubjects }

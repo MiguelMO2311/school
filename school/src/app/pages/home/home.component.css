@@ -1,0 +1,27 @@
+.containerHome {
+    height: 520px;
+    background-size: 100%;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKp627-XcP6cIfHoVDfSEVknif6mO3Z4flFA&usqp=CAU')
+}
+
+h1 {
+    padding: 8%;
+    padding-top: 20%;
+    text-align: center;
+    color: rgb(239, 162, 54)
+}
+
+span {
+    color: rgb(37, 81, 43)
+}
+
+h1:hover {
+    transition: color 2s ease-in-out;
+    color: whitesmoke;
+}
+
+span:hover {
+    transition: all 6s ease-out;
+    font-size: xx-large;
+    color: red;
+}

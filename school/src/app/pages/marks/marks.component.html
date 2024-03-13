@@ -1,0 +1,71 @@
+<div class="container-xxl">
+    <!-- Columna para las tarjetas -->
+    <div class="mark-cards">
+        <div class="varResult"></div>
+        @for (item of selection; track item.id) {
+        <app-card-marks [first_name]="item.first_name" [last_name]="item.last_name" [subject_title]="item.title"
+            [avg]="item.nota_media"></app-card-marks>
+        }
+        @empty {
+        <div class="alert alert-warning" role="alert">
+            EMPTY REPORT BOOKLET!
+        </div>}
+    </div>
+    <!-- Columna para los campos de entrada -->
+    <div class="mark-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 pl-3">
+                    <!-- Campo: Id Mark -->
+                    <div class="mb-0">
+                        <label for="exampleFormControlInput1" class="form-label">Id Mark</label>
+                        <input class="form-control" id="exampleFormControlInput1" placeholder="Id Mark" type="number"
+                            #mark_id>
+
+                        <!-- Campo: Mark -->
+                        <div class="mb-0">
+                            <label for="exampleFormControlInput1" class="form-label">Mark</label>
+                            <input class="form-control" id="exampleFormControlInput1" placeholder="Mark" type="text"
+                                #mark>
+                        </div>
+                        <!-- Campo: Date -->
+                        <div class="mb-0">
+                            <label for="exampleFormControlInput1" class="form-label">Date</label>
+                            <input class="form-control" id="exampleFormControlInput1" placeholder="Date" type="date"
+                                #registration_date>
+                        </div>
+
+                        <!-- Campo: Id Student -->
+                        <div class="mb-0">
+                            <label for="exampleFormControlInput1" class="form-label">Id Student</label>
+                            <input class="form-control" id="exampleFormControlInput1" placeholder="Id Student"
+                                type="number" #student_id>
+                        </div>
+
+
+                        <!-- Campo: Id Subject -->
+                        <div class="mb-0">
+                            <label for="exampleFormControlInput1" class="form-label">Id Subject</label>
+                            <input class="form-control" id="exampleFormControlInput1" placeholder="Id Suject"
+                                type="number" #placeholder>
+                        </div>
+                        <!-- Campo: Id Teacher -->
+                        <div class="mb-0">
+                            <label for="exampleFormControlInput1" class="form-label">Id Teacher</label>
+                            <input class="form-control" id="exampleFormControlInput1" placeholder="Id Teacher"
+                                type="number" #teacher_id>
+                        </div>
+
+                        <!-- Campo: Buttons -->
+                        <div class="row fixed-bottom py-3 px-5 bg-transparent">
+                            <div class="d-flex justify-content-between w-100">
+                                <button type="submit" (click)="getAverageMark(mark_id)">Nota Media</button>
+                                <button type="submit" (click)="findEnrolled(mark_id)">Apuntadas</button>
+                                <button type="submit" (click)="findTaught(teacher_id)">Impartidas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

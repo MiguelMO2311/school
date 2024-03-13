@@ -1,0 +1,48 @@
+
+.row{
+    height: 400px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    justify-content: center;
+    align-content: center;
+    
+}
+.navbar {
+    padding-top: 1%;
+    box-sizing: border-box;
+    height: 25%;
+
+   
+}
+
+.bloqFooter {
+    gap:5%;
+    padding-left: 2%;
+    display: flex;
+    flex-wrap: nowrap;
+ 
+}
+
+.imageFooter {
+
+    width: 200px;
+    height:70px;
+    padding: 1%;
+    text-decoration: coral;
+}
+
+.textFooter{
+    display: flex;
+    justify-content: end;
+    padding-left: 45%;
+    font-size: xx-small;
+    
+}
+.textFooter1{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-left: 95%;
+    padding-right: 2%;
+}

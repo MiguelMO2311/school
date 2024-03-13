@@ -1,0 +1,131 @@
+.container-xxl {
+  height: 700px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  justify-content: space-between;
+  background-color: green;
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2kN5x69Ex2b1K8EHD9cLSSdUnvjV0-b0evO6aMWbGW80F3cDx7Qw69XeB8MR3avu0Iao&usqp=CAU');
+  background-repeat: no-repeat;
+  background-size: 200vh;
+
+}
+
+
+/* Columna para las tarjetas de los estudiantes */
+.student-cards {
+  flex: 2;
+  /* Dos tercios del ancho */
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+/* Columna para el formulario */
+.student-form {
+  width: 18rem;
+  flex: 1;
+  /* Un tercio del ancho */
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10%;
+}
+
+.app-card-students {
+  margin: 20px;
+  /* Resto de tus estilos */
+}
+
+
+.col-md-8 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.row-cols-md-4 {
+  width: 100%;
+  /* Ocupa todo el ancho disponible */
+  display: flex;
+  flex-wrap: wrap;
+  padding: 3%;
+}
+
+.alert {
+  width: 250px;
+  background-color: rgb(110, 238, 30);
+  color: red;
+}
+
+.row {
+  justify-content: center;
+  justify-self: center;
+  padding-left: 1%;
+}
+
+.containerFormRegister {
+  color: white;
+  background: transparent;
+}
+
+.form-label {
+  width: 200px;
+  color: whitesmoke;
+  font-weight: bold;
+
+}
+
+.form-text {
+  color: rgba(127, 255, 212, 0.646);
+}
+
+input {
+  background-color: rgba(166, 197, 156, 0.324);
+  font-size: medium;
+  width: 200px;
+  height: 10px;
+  padding: 10px;
+}
+
+
+#basic-addon3 {
+  color: rgb(47, 45, 45);
+  background-color: white;
+}
+
+.error {
+  color: red;
+  font-size: xx-small;
+}
+
+button {
+  background-color: whitesmoke;
+  color: green;
+  border: none;
+  padding: 10px 32px;
+  ;
+  border: none;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  color: rgb(15, 154, 57);
+}
+
+span {
+  display: flex;
+  justify-content: center;
+  color: rgb(33, 33, 177);
+}

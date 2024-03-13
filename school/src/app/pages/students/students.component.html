@@ -1,0 +1,69 @@
+<div class="container-xxl">
+  <div class="student-cards">
+    @for (student of students; track student.student_id) {
+    <app-card-students [students]="student"></app-card-students>
+    }
+    @empty {
+    <div class="alert alert-warning" role="alert">
+      The students are on holiday
+    </div>
+    }
+  </div>
+  <div class="student-form">
+    <form>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 pl-3">
+            <!-- Campo: Id Student -->
+            <div class="mb-0">
+              <label for="exampleFormControlInput1" class="form-label">Id Student</label>
+              <input class="form-control" placeholder="Id Student" type="number" #student_id>
+            </div>
+
+            <!-- Campo: First Name -->
+
+            <div class="mb-0">
+              <label for="exampleFormControlInput1" class="form-label">First Name</label>
+              <input class="form-control" placeholder="First Name" type="text" #first_name>
+            </div>
+            <!-- Campo: Last Name -->
+
+            <div class="mb-0">
+              <label for="exampleFormControlInput1" class="form-label">Last Name</label>
+              <input class="form-control" placeholder="Last Name" type="text" #last_name>
+
+            </div>
+            <!-- Campo: Group Id -->
+            <div class="mb-0">
+              <label for="exampleFormControlInput1" class="form-label">Id Group</label>
+              <input class="form-control" placeholder="Id Group" type="number" #group_id>
+
+            </div>
+
+            <!-- Campo: Registration Date -->
+
+            <div class="mb-0">
+              <label for="exampleFormControlInput1" class="form-label"> Registration Date</label>
+              <input class="form-control" placeholder="Registration Date" type="date" #registration_date>
+            </div>
+
+            <!-- Campo: Buttons -->
+            <div class="row fixed-bottom py-3 px-5 bg-transparent">
+              <div class="d-flex justify-content-between w-100">
+                <button type="button" (click)=" findStudent(student_id.value)">Mostrar</button>
+                <button type="button"
+                  (click)=" createStudent(student_id, first_name, last_name, group_id, registration_date)">Crear</button>
+                <button type="button"
+                  (click)="updateStudent(student_id, first_name, last_name, group_id, registration_date)">Actualizar</button>
+                <button type="button" (click)="deleteStudent(student_id.value)">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>

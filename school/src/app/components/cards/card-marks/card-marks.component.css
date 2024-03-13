@@ -1,0 +1,89 @@
+
+.card {
+
+    width: 150px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-self: center;
+    text-align: center;
+    color: rgb(152, 25, 25);
+    background-color: rgb(39, 218, 89);
+    border-color: rgba(216, 241, 220, 0.539);
+    font-size: xx-small;
+    margin:1%;
+
+}
+
+.btn-close {
+    display: flex;
+    align-self: end;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 5px;
+    height: 5px;
+    margin-bottom: 2%;;
+    
+
+}
+
+.card-type{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: end;
+    text-align: end; 
+    padding-right: 3%;
+    color:red;
+    font-size: smaller
+}
+.card-mark {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: center;
+    text-align: center; 
+    color: rgb(16, 16, 155);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size:larger;
+}
+
+.card-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: center;
+    text-align: center;
+    font-size: smaller;
+    color:black;
+   
+}
+
+.card-student_id {
+    font-size: medium;
+    color: blueviolet;
+    font-size: x-small;
+    background-color: burlywood;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: center;
+    text-align: center;
+    font-size: xx-small;
+    padding-bottom: 2%;
+    
+}
+
+.card-subject_id {
+    background-color: rgb(135, 167, 140);
+    font-weight: 100;
+    background-color: rgb(16, 50, 21);
+    color:whitesmoke;
+    font-size: x-small;
+    
+}
+
+
+
